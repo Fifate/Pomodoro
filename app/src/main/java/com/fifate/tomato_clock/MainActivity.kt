@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun PomodoroTimer() {
-    var state:PomodoroState by remember { mutableStateOf(PomodoroState.INIT) }
+    var state:PomodoroState by remember { mutableStateOf(PomodoroState.FOCUSED) }
 
 
     // State to store the initial and remaining time in seconds
@@ -178,12 +178,12 @@ fun PomodoroTimer() {
             PomodoroState.INIT -> Button(onClick = { startFocus() }){
                 Text(text = "开始专注", fontSize = 24.sp)
             }
-            PomodoroState.FOCUSING -> Column{
+            PomodoroState.FOCUSING -> Column(modifier = Modifier.align(Alignment.CenterHorizontally)){
 
-                Text(timeDisplay.value, fontSize = 48.sp) //显示倒计时
+                Text(timeDisplay.value, fontSize = 100.sp,modifier = Modifier.align(Alignment.CenterHorizontally)) //显示倒计时
                 Row {
                     if (!isPause){
-                        Button(onClick = {pauseTimer()}) { Text(text = "暂停") }
+                        Button(onClick = {pauseTimer()}) { Text(text = "暂停",fontSize=24.sp) }
                         Button(onClick = {skipFocus()}){ Text(text="跳过", fontSize=24.sp) }
                     }else {
                         Button(onClick = {continueTimer()}) { Text(text = "继续") }
@@ -191,20 +191,20 @@ fun PomodoroTimer() {
                     Button(onClick = {resetTimer()}){Text(text="重置", fontSize=24.sp)} //重置按钮
                 }
             }
-            PomodoroState.FOCUSED -> Column {
-                Text(String.format("%2d:%02d", overFocusTime / 60, overFocusTime % 60), fontSize = 24.sp)
-                Text(text="专注完成，快活动活动休息一下吧！", fontSize = 48.sp)
-                Row {
+            PomodoroState.FOCUSED -> Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                Text(String.format("%2d:%02d", overFocusTime / 60, overFocusTime % 60), fontSize = 20.sp)
+                Text(text="专注完成，快活动活动休息一下吧！", fontSize = 20.sp,modifier = Modifier.align(Alignment.CenterHorizontally))
+                Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     if (!isPause){
-                        Button(onClick = {pauseTimer()}) { Text(text = "暂停") }
-                        Button(onClick = {startBreak()}){ Text(text="开始休息", fontSize=24.sp) }
+                        Button(onClick = {pauseTimer()}) { Text(text = "暂停",fontSize=12.sp)}
+                        Button(onClick = {startBreak()}){ Text(text="开始休息", fontSize=12.sp) }
                     }else {
-                        Button(onClick = {continueTimer()}) { Text(text = "继续") }
+                        Button(onClick = {continueTimer()}) { Text(text = "继续",fontSize=12.sp) }
                     }
-                    Button(onClick = {resetTimer()}){Text(text="重置", fontSize=24.sp)} //重置按钮
+                    Button(onClick = {resetTimer()}){Text(text="重置", fontSize=12.sp)} //重置按钮
                 }
             }
-            PomodoroState.BREAKING -> Column {
+            PomodoroState.BREAKING -> Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 Text(text="休息中", fontSize = 48.sp)
                 Text(String.format("%2d:%02d", remainingBreakTime / 60, remainingBreakTime % 60), fontSize = 48.sp)
                 Row {
