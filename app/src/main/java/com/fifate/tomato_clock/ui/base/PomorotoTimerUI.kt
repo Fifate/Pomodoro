@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,13 +17,13 @@ import com.fifate.tomato_clock.state.PomodoroState
 @SuppressLint("UnrememberedMutableState", "DefaultLocale")
 @Composable
 fun PomodoroTimerUI(
-    isPause: MutableState<Boolean>,
-    state: MutableState<PomodoroState>,
+    isPause:Boolean,
+    state: PomodoroState,
 
-    remainingFocusTime:MutableState<Int>,
-    remainingBreakTime: MutableState<Int>,
-    overFocusTime:MutableState<Int>,
-    overBreakTime:MutableState<Int>,
+    remainingFocusTime:Int,
+    remainingBreakTime: Int,
+    overFocusTime:Int,
+    overBreakTime:Int,
 
     startFocus: () -> Unit,
     startBreak:()->Unit,
@@ -34,7 +33,7 @@ fun PomodoroTimerUI(
     skipBreak:()->Unit,
     skipFocus: () -> Unit,
 
-    ) {
+) {
 
     val timeDisplay = derivedStateOf {
         String.format("%2d:%02d", remainingFocusTime / 60, remainingFocusTime % 60)

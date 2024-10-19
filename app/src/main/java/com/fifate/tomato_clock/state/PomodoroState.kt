@@ -20,27 +20,28 @@ enum class PomodoroState {
 fun StateControl(
     isPause: Boolean,
     state: PomodoroState,
-    focusing:()->Unit,
-    focused:()->Unit,
-    breaking:()->Unit,
-    broke:()->Unit){
+    focusing: () -> Unit,
+    focused: () -> Unit,
+    breaking: () -> Unit,
+    broke: () -> Unit
+) {
 
     // Coroutine scope
     val coroutineScope = rememberCoroutineScope()
     // Launch a coroutine to update the remaining time
     LaunchedEffect(key1 = true) {
         coroutineScope.launch {
-            while(isActive){
+            while (isActive) {
                 delay(1000)
-                if (isPause){
+                if (isPause) {
                     continue
                 }
-                when(state){
+                when (state) {
                     PomodoroState.INIT -> {}
                     PomodoroState.FOCUSING -> focusing()
-                    PomodoroState.FOCUSED ->focused()
+                    PomodoroState.FOCUSED -> focused()
                     PomodoroState.BREAKING -> breaking()
-                    PomodoroState.BROKE ->broke()
+                    PomodoroState.BROKE -> broke()
                 }
             }
         }
