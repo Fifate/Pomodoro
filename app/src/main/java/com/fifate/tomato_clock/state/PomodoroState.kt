@@ -2,7 +2,9 @@ package com.fifate.tomato_clock.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -18,8 +20,8 @@ enum class PomodoroState {
 
 @Composable
 fun StateControl(
-    isPause: Boolean,
-    state: PomodoroState,
+    isPause:  Boolean,
+    state: MutableState<PomodoroState>,
     focusing: () -> Unit,
     focused: () -> Unit,
     breaking: () -> Unit,
@@ -36,7 +38,7 @@ fun StateControl(
                 if (isPause) {
                     continue
                 }
-                when (state) {
+                when (state.value) {
                     PomodoroState.INIT -> {}
                     PomodoroState.FOCUSING -> focusing()
                     PomodoroState.FOCUSED -> focused()

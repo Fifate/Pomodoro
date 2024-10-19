@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,7 +50,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun PomodoroTimer() {
-    var state: PomodoroState by remember { mutableStateOf(PomodoroState.INIT) }
+    var state =  rememberSaveable{ mutableStateOf(PomodoroState.INIT) }
 
 
     // State to store the initial and remaining time in seconds
@@ -69,7 +70,7 @@ fun PomodoroTimer() {
             if (remainingFocusTime > 0) {
                 remainingFocusTime--
             } else if (remainingFocusTime == 0) {
-                state = PomodoroState.FOCUSED
+                state.value = PomodoroState.FOCUSED
                 overFocusTime = 0
             }
         },
@@ -78,7 +79,7 @@ fun PomodoroTimer() {
             if (remainingBreakTime > 0) {
                 remainingBreakTime--
             } else if (remainingBreakTime == 0) {
-                state = PomodoroState.BROKE
+                state.value = PomodoroState.BROKE
                 overBreakTime = 0
             }
         },
@@ -86,18 +87,18 @@ fun PomodoroTimer() {
     )
 
     PomodoroTimerUI(isPause,
-        state,
+        state.value,
         remainingFocusTime,
         remainingBreakTime,
         overFocusTime,
         overBreakTime,
         startFocus = {
-            state = PomodoroState.FOCUSING
+            state.value = PomodoroState.FOCUSING
             isPause = false
             remainingFocusTime = initialFocusTime
         },
         startBreak = {
-            state = PomodoroState.BREAKING
+            state.value = PomodoroState.BREAKING
             remainingBreakTime = initBreakTime
         },
         pauseTimer = {
@@ -112,11 +113,11 @@ fun PomodoroTimer() {
             remainingBreakTime = initBreakTime
         },
         skipBreak = {
-            state = PomodoroState.FOCUSING
+            state.value = PomodoroState.FOCUSING
             remainingFocusTime = initialFocusTime
         },
         skipFocus = {
-            state = PomodoroState.BREAKING
+            state.value = PomodoroState.BREAKING
             remainingBreakTime = initBreakTime
         })
 
