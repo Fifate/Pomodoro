@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">tomato_clock</string>
+    <string name="timer_circle">timer_circle</string>
 </resources>
