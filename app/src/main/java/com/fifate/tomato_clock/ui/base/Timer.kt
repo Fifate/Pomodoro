@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun Timer(remainingSecs:Int, modifier: Modifier){
+fun Timer(modifier: Modifier, remainingSecs:Int){
     Surface(modifier = modifier, color = MaterialTheme.colorScheme.surface) {
         Box(modifier = modifier, contentAlignment = Alignment.Center){
             Image(painter = painterResource(id = R.drawable.circle),

@@ -2,6 +2,7 @@ package com.fifate.tomato_clock.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.delay
@@ -19,13 +20,12 @@ enum class PomodoroState {
 
 @Composable
 fun StateControl(
-    isPause:  Boolean,
+    isPause:  MutableState<Boolean>,
     state: MutableState<PomodoroState>,
-    focusing: () -> Unit,
-    focused: () -> Unit,
-    breaking: () -> Unit,
-    broke: () -> Unit
+    remainingSecs: MutableIntState,
 ) {
+    val initFocusSecs = 25*60;
+    val initBreakSecs = 5*60;
 
     // Coroutine scope
     val coroutineScope = rememberCoroutineScope()
@@ -34,15 +34,32 @@ fun StateControl(
         coroutineScope.launch {
             while (isActive) {
                 delay(1000)
-                if (isPause) {
+                if (isPause.value) {
                     continue
                 }
                 when (state.value) {
-                    PomodoroState.INIT -> {}
-                    PomodoroState.FOCUSING -> focusing()
-                    PomodoroState.FOCUSED -> focused()
-                    PomodoroState.BREAKING -> breaking()
-                    PomodoroState.BROKE -> broke()
+                    PomodoroState.INIT -> {remainingSecs.intValue = initFocusSecs}
+                    PomodoroState.FOCUSING -> {
+                        if (remainingSecs.intValue > 0) {
+                            remainingSecs.intValue--
+                        } else if (remainingSecs.intValue == 0) {
+                            state.value = PomodoroState.FOCUSED
+                            remainingSecs.intValue = initBreakSecs
+                        }
+                    }
+                    PomodoroState.FOCUSED -> {
+                        remainingSecs.intValue = initBreakSecs
+                    }
+                    PomodoroState.BREAKING -> {
+                        if (remainingSecs.intValue > 0) {
+                            remainingSecs.intValue--
+                        } else if (remainingSecs.intValue == 0) {
+                            state.value = PomodoroState.BROKE
+                        }
+                    }
+                    PomodoroState.BROKE -> {
+                        remainingSecs.intValue = initFocusSecs
+                    }
                 }
             }
         }

@@ -55,69 +55,20 @@ fun PomodoroTimer() {
     // State to store the initial and remaining time in seconds
     val initialFocusTime by remember { mutableIntStateOf(1500) } // 25 minutes in seconds
     val initBreakTime by remember { mutableIntStateOf(5 * 60) } // 15 minutes in seconds
-    var remainingFocusTime by remember { mutableIntStateOf(initialFocusTime) }
-    var remainingBreakTime by remember { mutableIntStateOf(initBreakTime) }
-    var overFocusTime by remember { mutableIntStateOf(0) }
-    var overBreakTime by remember { mutableIntStateOf(0) }
-    var isPause by remember { mutableStateOf(false) }
+    val remainingSecs  =  rememberSaveable{ mutableIntStateOf(initialFocusTime) }
+    val isPause = rememberSaveable { mutableStateOf(false) }
 
 
     StateControl(
         isPause,
         state,
-        focusing = {
-            if (remainingFocusTime > 0) {
-                remainingFocusTime--
-            } else if (remainingFocusTime == 0) {
-                state.value = PomodoroState.FOCUSED
-                overFocusTime = 0
-            }
-        },
-        focused = { overFocusTime++ },
-        breaking = {
-            if (remainingBreakTime > 0) {
-                remainingBreakTime--
-            } else if (remainingBreakTime == 0) {
-                state.value = PomodoroState.BROKE
-                overBreakTime = 0
-            }
-        },
-        broke = { overBreakTime++ }
-    )
+        remainingSecs)
 
-    PomodoroTimerUI(isPause,
-        state.value,
-        remainingFocusTime,
-        remainingBreakTime,
-        overFocusTime,
-        overBreakTime,
-        startFocus = {
-            state.value = PomodoroState.FOCUSING
-            isPause = false
-            remainingFocusTime = initialFocusTime
-        },
-        startBreak = {
-            state.value = PomodoroState.BREAKING
-            remainingBreakTime = initBreakTime
-        },
-        pauseTimer = {
-            isPause = true
-        },
-        continueTimer = {
-            isPause = false
-        },
-        resetTimer = {
-            isPause = false
-            remainingFocusTime = initialFocusTime
-            remainingBreakTime = initBreakTime
-        },
-        skipBreak = {
-            state.value = PomodoroState.FOCUSING
-            remainingFocusTime = initialFocusTime
-        },
-        skipFocus = {
-            state.value = PomodoroState.BREAKING
-            remainingBreakTime = initBreakTime
-        })
+    PomodoroTimerUI(
+        modifier = Modifier.fillMaxSize(),
+        isPause,
+        state,
+        remainingSecs,
+    )
 
 }
