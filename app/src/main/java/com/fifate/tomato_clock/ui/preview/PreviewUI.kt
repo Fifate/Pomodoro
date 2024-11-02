@@ -12,15 +12,15 @@ import com.fifate.tomato_clock.ui.base.PomodoroTimerButtons
 import com.fifate.tomato_clock.ui.theme.Blue
 
 
-@Composable
-@Preview(showBackground = true, backgroundColor = 0xFF8BBFEE)
-fun PreviewPomodoroTimerButtons(){
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Blue
-    ){
-        var state =  rememberSaveable{ mutableStateOf(PomodoroState.FOCUSING) }
-        var isPause = rememberSaveable { mutableStateOf(false) }
-        PomodoroTimerButtons(modifier = Modifier, state = state, isPause =isPause )
-    }
-}
+//@Composable
+//@Preview(showBackground = true, backgroundColor = 0xFF8BBFEE)
+//fun PreviewPomodoroTimerButtons(){
+//    Surface(
+//        modifier = Modifier.fillMaxSize(),
+//        color = Blue
+//    ){
+//        var state =  rememberSaveable{ mutableStateOf(PomodoroState.FOCUSING) }
+//        var isPause = rememberSaveable { mutableStateOf(false) }
+//        PomodoroTimerButtons(state = state, isPause =isPause )
+//    }
+//}

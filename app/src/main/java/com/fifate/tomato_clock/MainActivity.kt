@@ -11,17 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.fifate.tomato_clock.state.PomodoroState
 import com.fifate.tomato_clock.state.StateControl
 import com.fifate.tomato_clock.ui.base.PomodoroTimerUI
 import com.fifate.tomato_clock.ui.theme.TomatoClockTheme
+import com.fifate.tomato_clock.config.*
 
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        loadConfig()
         setContent {
             TomatoClockTheme {
                 Surface(
@@ -45,18 +45,11 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("DefaultLocale", "CoroutineCreationDuringComposition", "UnrememberedMutableState")
-@Preview(showBackground = true)
 @Composable
 fun PomodoroTimer() {
-    var state =  rememberSaveable{ mutableStateOf(PomodoroState.INIT) }
-
-
-    // State to store the initial and remaining time in seconds
-    val initialFocusTime by remember { mutableIntStateOf(1500) } // 25 minutes in seconds
-    val initBreakTime by remember { mutableIntStateOf(5 * 60) } // 15 minutes in seconds
-    val remainingSecs  =  rememberSaveable{ mutableIntStateOf(initialFocusTime) }
+    val state =  rememberSaveable{ mutableStateOf(PomodoroState.INIT) }
+    val remainingSecs  =  rememberSaveable{ mutableIntStateOf(initFocusSecs) }
     val isPause = rememberSaveable { mutableStateOf(false) }
-
 
     StateControl(
         isPause,
@@ -64,7 +57,6 @@ fun PomodoroTimer() {
         remainingSecs)
 
     PomodoroTimerUI(
-        Modifier,
         isPause,
         state,
         remainingSecs,

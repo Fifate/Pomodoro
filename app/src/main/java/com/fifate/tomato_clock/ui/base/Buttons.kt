@@ -12,7 +12,7 @@ import com.fifate.tomato_clock.R
 
 
 @Composable
-fun CustomButton(modifier: Modifier, onClick: () -> Unit, id: Int){
+fun CustomButton(modifier: Modifier=Modifier, onClick: () -> Unit, id: Int){
     Surface (modifier = modifier, color = Color.Transparent){
         IconButton(onClick = onClick, colors = iconButtonColors(containerColor = Color.Transparent)) {
             Icon(painter = painterResource(id = id), contentDescription = null)
@@ -21,7 +21,7 @@ fun CustomButton(modifier: Modifier, onClick: () -> Unit, id: Int){
 }
 
 @Composable
-fun StartButton(modifier: Modifier,onClick: () -> Unit) {
+fun StartButton(modifier: Modifier=Modifier,onClick: () -> Unit) {
     Surface (modifier=modifier){
         CustomButton(modifier,onClick,id = R.drawable.start_icon)
     }
@@ -29,7 +29,7 @@ fun StartButton(modifier: Modifier,onClick: () -> Unit) {
 
 
 @Composable
-fun StopButton(modifier: Modifier, onClick: () -> Unit) {
+fun StopButton(modifier: Modifier=Modifier, onClick: () -> Unit) {
     Surface (modifier = modifier){
         CustomButton(modifier,onClick,id = R.drawable.stop_icon)
     }
@@ -37,7 +37,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
 
 
 @Composable
-fun ContinueButton(modifier: Modifier, onClick: () -> Unit) {
+fun ContinueButton(modifier:Modifier=Modifier, onClick: () -> Unit) {
     Surface (modifier = modifier){
         CustomButton(modifier,onClick,id = R.drawable.continue_icon)
     }
@@ -45,21 +45,21 @@ fun ContinueButton(modifier: Modifier, onClick: () -> Unit) {
 
 
 @Composable
-fun PauseButton(modifier: Modifier, onClick: () -> Unit) {
+fun PauseButton(modifier: Modifier=Modifier, onClick: () -> Unit) {
     Surface (modifier = modifier){
         CustomButton(modifier,onClick,id = R.drawable.pause_icon)
     }
 }
 
 @Composable
-fun NextButton(modifier: Modifier, onClick: () -> Unit) {
+fun NextButton(modifier: Modifier=Modifier, onClick: () -> Unit) {
     Surface (modifier = modifier){
         CustomButton(modifier,onClick,id = R.drawable.next_icon)
     }
 }
 
 @Composable
-fun ResetButton(modifier: Modifier, onClick: () -> Unit) {
+fun ResetButton(modifier: Modifier=Modifier, onClick: () -> Unit) {
     Surface (modifier = modifier){
         CustomButton(modifier,onClick,id = R.drawable.reset_icon)
     }
