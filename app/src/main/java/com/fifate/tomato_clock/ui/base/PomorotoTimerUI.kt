@@ -52,7 +52,7 @@ fun PomodoroTimerButtons(
                     StopButton(onClick = {state.value = PomodoroState.INIT})
                 }
                 PomodoroState.FOCUSED -> {
-                    NextButton(onClick = {
+                    StartButton(onClick = {
                         state.value = PomodoroState.BREAKING
                         remainingSecs.value = initBreakSecs
                     })
@@ -75,7 +75,7 @@ fun PomodoroTimerButtons(
                     StopButton(onClick = {state.value = PomodoroState.INIT})
                 }
                 PomodoroState.BROKE -> {
-                    NextButton(onClick = {
+                    StartButton(onClick = {
                         state.value = PomodoroState.FOCUSED
                         remainingSecs.value = initFocusSecs
                     })
