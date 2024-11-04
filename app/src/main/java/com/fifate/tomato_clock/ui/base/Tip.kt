@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
 import com.fifate.tomato_clock.state.PomodoroState
 
 @Composable
@@ -24,8 +25,8 @@ fun Tip(modifier: Modifier,state: MutableState<PomodoroState>){
 
 
 @Composable
-fun StatusText(modifier: Modifier,state: MutableState<PomodoroState>){
-    Surface(color = MaterialTheme.colorScheme.onSurface) {
+fun StatusText(modifier: Modifier=Modifier,state: MutableState<PomodoroState>){
+    Surface(color = MaterialTheme.colorScheme.primary) {
         val statusText:String = when(state.value){
             PomodoroState.INIT->"开始专注"
             PomodoroState.FOCUSING->"专注中"
@@ -33,6 +34,6 @@ fun StatusText(modifier: Modifier,state: MutableState<PomodoroState>){
             PomodoroState.BREAKING -> "休息中"
             PomodoroState.BROKE -> "开始专注"
         }
-        Text(statusText)
+        Text(statusText, fontSize = 30.sp)
     }
 }

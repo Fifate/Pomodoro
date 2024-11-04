@@ -106,7 +106,7 @@ fun PomodoroTimerUI(
 //        )
         Box(modifier = Modifier.weight(1f))
 
-        Timer(remainingSecs, 260, SunOrange)
+        Timer(remainingSecs, 260, SunOrange,state)
 
         PomodoroTimerButtons(state,isPause,remainingSecs)
 
