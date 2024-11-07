@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.sp
 import com.fifate.tomato_clock.state.PomodoroState
 
 @Composable
-fun Tip(modifier: Modifier,state: MutableState<PomodoroState>){
-    Surface(color = MaterialTheme.colorScheme.onSurface) {
+fun Tip(state: MutableState<PomodoroState>){
+    Surface(color = MaterialTheme.colorScheme.surface) {
         val tip:String = when(state.value){
             PomodoroState.INIT->"幽兰生前庭，含熏待清风"
             PomodoroState.FOCUSING->"折茎聊可佩，入室自成芳"
@@ -20,20 +20,5 @@ fun Tip(modifier: Modifier,state: MutableState<PomodoroState>){
             PomodoroState.BROKE -> "两竿翠竹拂云长，几叶幽兰带露香"
         }
         Text(tip)
-    }
-}
-
-
-@Composable
-fun StatusText(modifier: Modifier=Modifier,state: MutableState<PomodoroState>){
-    Surface(color = MaterialTheme.colorScheme.primary) {
-        val statusText:String = when(state.value){
-            PomodoroState.INIT->"开始专注"
-            PomodoroState.FOCUSING->"专注中"
-            PomodoroState.FOCUSED -> "开始休息"
-            PomodoroState.BREAKING -> "休息中"
-            PomodoroState.BROKE -> "开始专注"
-        }
-        Text(statusText, fontSize = 30.sp)
     }
 }

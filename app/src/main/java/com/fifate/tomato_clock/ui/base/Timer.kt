@@ -34,11 +34,24 @@ fun Timer(remainingSecs: MutableState<Int>, size:Int, color: Color, state: Mutab
                 StatusIcon(state)
                 Text(text = String.format("%02d:%02d", remainingSecs.value / 60, remainingSecs.value % 60),
                     color= MaterialTheme.colorScheme.onPrimary,
-                    fontSize = (size/2.8).sp)
+                    fontSize = (size/3.2).sp)
                 StatusText(state=state)
             }
-
         }
+    }
+}
+
+@Composable
+fun StatusText(modifier: Modifier=Modifier,state: MutableState<PomodoroState>){
+    Surface(color = MaterialTheme.colorScheme.primary) {
+        val statusText:String = when(state.value){
+            PomodoroState.INIT->"开始专注"
+            PomodoroState.FOCUSING->"专注中"
+            PomodoroState.FOCUSED -> "开始休息"
+            PomodoroState.BREAKING -> "休息中"
+            PomodoroState.BROKE -> "开始专注"
+        }
+        Text(statusText, fontSize = 30.sp)
     }
 }
 

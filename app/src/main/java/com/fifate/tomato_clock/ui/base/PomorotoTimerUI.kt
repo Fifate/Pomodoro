@@ -1,6 +1,7 @@
 package com.fifate.tomato_clock.ui.base
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import com.fifate.tomato_clock.R
 import com.fifate.tomato_clock.config.*
 import com.fifate.tomato_clock.state.PomodoroState
@@ -104,18 +106,26 @@ fun PomodoroTimerUI(
 //            painter = painterResource(id = R.drawable.bamboo),
 //            contentDescription = stringResource(id = R.string.bamboo)
 //        )
-        Box(modifier = Modifier.weight(1f))
+        Box(modifier = Modifier.weight(1f).align(Alignment.Start)){
+            Image(painterResource(R.drawable.bamboo), contentDescription = "bamboo")
+        }
 
         Timer(remainingSecs, 260, SunOrange,state)
 
+        //Tip(state)
+
         PomodoroTimerButtons(state,isPause,remainingSecs)
 
-        Box(modifier = Modifier.weight(1f))
+        Box(modifier = Modifier.weight(1f)){
+            Image(painterResource(R.drawable.orchid), contentDescription = "bamboo")
+        }
 
 //        Image(
 //            painter = painterResource(id = R.drawable.orchid),
 //            contentDescription = stringResource(id = R.string.orchid)
 //        )
+
+
 
     }
 }
