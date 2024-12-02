@@ -7,17 +7,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import com.fifate.tomato_clock.R
-import com.fifate.tomato_clock.config.*
+import com.fifate.tomato_clock.config.initBreakSecs
+import com.fifate.tomato_clock.config.initFocusSecs
 import com.fifate.tomato_clock.state.PomodoroState
 import com.fifate.tomato_clock.ui.theme.SunOrange
 
@@ -100,6 +104,7 @@ fun PomodoroTimerUI(
     isPause:MutableState<Boolean>,
     state: MutableState<PomodoroState>,
     remainingSecs: MutableState<Int>,
+    smallGoal: MutableState<String>
 ) {
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()){
 //        Image(
@@ -112,7 +117,7 @@ fun PomodoroTimerUI(
 
         Timer(remainingSecs, 260, SunOrange,state)
 
-        //Tip(state)
+        Goal(state, smallGoal)
 
         PomodoroTimerButtons(state,isPause,remainingSecs)
 
@@ -127,5 +132,16 @@ fun PomodoroTimerUI(
 
 
 
+    }
+}
+
+
+@Composable
+fun Goal(state: MutableState<PomodoroState>, smallGoal: MutableState<String>){
+    Surface(color = MaterialTheme.colorScheme.surface) {
+        TextField(value=smallGoal.value,
+            onValueChange = {smallGoal.value=it},
+            placeholder = { Text("定个小目标吧") },
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp))
     }
 }

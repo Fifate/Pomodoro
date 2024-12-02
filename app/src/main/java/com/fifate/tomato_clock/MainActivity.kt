@@ -11,16 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.fifate.tomato_clock.config.initFocusSecs
+import com.fifate.tomato_clock.config.loadConfig
 import com.fifate.tomato_clock.state.PomodoroState
 import com.fifate.tomato_clock.state.StateControl
 import com.fifate.tomato_clock.ui.base.PomodoroTimerUI
 import com.fifate.tomato_clock.ui.theme.TomatoClockTheme
-import com.fifate.tomato_clock.config.*
 
 
 class MainActivity : ComponentActivity() {
@@ -50,6 +51,9 @@ fun PomodoroTimer() {
     val state =  rememberSaveable{ mutableStateOf(PomodoroState.INIT) }
     val remainingSecs  =  rememberSaveable{ mutableIntStateOf(initFocusSecs) }
     val isPause = rememberSaveable { mutableStateOf(false) }
+    val smallGoal:String = stringResource(R.string.small_goal)
+    val smallGoalMutableState = rememberSaveable {  mutableStateOf(smallGoal) }
+
 
     StateControl(
         isPause,
@@ -60,6 +64,7 @@ fun PomodoroTimer() {
         isPause,
         state,
         remainingSecs,
+        smallGoalMutableState,
     )
 
 }

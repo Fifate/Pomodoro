@@ -2,11 +2,10 @@ package com.fifate.tomato_clock.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
-import com.fifate.tomato_clock.R
-import com.fifate.tomato_clock.config.*
+import com.fifate.tomato_clock.config.initBreakSecs
+import com.fifate.tomato_clock.config.initFocusSecs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
