@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.fifate.tomato_clock.config.initFocusSecs
 import com.fifate.tomato_clock.config.loadConfig
 import com.fifate.tomato_clock.state.PomodoroState
@@ -51,8 +50,7 @@ fun PomodoroTimer() {
     val state =  rememberSaveable{ mutableStateOf(PomodoroState.INIT) }
     val remainingSecs  =  rememberSaveable{ mutableIntStateOf(initFocusSecs) }
     val isPause = rememberSaveable { mutableStateOf(false) }
-    val smallGoal:String = stringResource(R.string.small_goal)
-    val smallGoalMutableState = rememberSaveable {  mutableStateOf(smallGoal) }
+    val smallGoalMutableState = rememberSaveable {  mutableStateOf("") }
 
 
     StateControl(

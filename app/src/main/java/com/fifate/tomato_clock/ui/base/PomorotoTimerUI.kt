@@ -7,17 +7,27 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.fifate.tomato_clock.R
 import com.fifate.tomato_clock.config.initBreakSecs
@@ -111,7 +121,9 @@ fun PomodoroTimerUI(
 //            painter = painterResource(id = R.drawable.bamboo),
 //            contentDescription = stringResource(id = R.string.bamboo)
 //        )
-        Box(modifier = Modifier.weight(1f).align(Alignment.Start)){
+        Box(modifier = Modifier
+            .weight(1f)
+            .align(Alignment.Start)){
             Image(painterResource(R.drawable.bamboo), contentDescription = "bamboo")
         }
 
@@ -136,12 +148,40 @@ fun PomodoroTimerUI(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Goal(state: MutableState<PomodoroState>, smallGoal: MutableState<String>){
+fun Goal(state: MutableState<PomodoroState>, smallGoal: MutableState<String>) {
+    val focusManager = LocalFocusManager.current
+    val isFocused = remember { mutableStateOf(false) }
+    val fz = 28.sp
+
     Surface(color = MaterialTheme.colorScheme.surface) {
-        TextField(value=smallGoal.value,
-            onValueChange = {smallGoal.value=it},
-            placeholder = { Text("定个小目标吧") },
-            textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp))
+        BasicTextField( // Use BasicTextField directly
+            value = smallGoal.value,
+            onValueChange = { smallGoal.value = it },
+            textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = fz,
+                textAlign = TextAlign.Center // Center text within TextField
+            ),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            decorationBox = { innerTextField -> // Custom decoration box
+                if (!isFocused.value && smallGoal.value.isEmpty()) { // Show placeholder when not focused and empty
+                    Text(
+                        "定个小目标",
+                        fontSize = fz,
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
+                        textAlign = TextAlign.Center, // Center placeholder text
+                        modifier = Modifier.fillMaxWidth() // Make placeholder fill width
+                    )
+                }
+                innerTextField() // Render the actual TextField
+            },
+            modifier = Modifier
+                .onFocusChanged { isFocused.value = it.isFocused }
+                .fillMaxWidth() // Make TextField fill width
+        )
     }
 }
