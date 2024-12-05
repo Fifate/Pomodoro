@@ -1,9 +1,13 @@
 package com.fifate.tomato_clock.state
 
+import android.media.MediaPlayer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import com.fifate.tomato_clock.R
 import com.fifate.tomato_clock.config.initBreakSecs
 import com.fifate.tomato_clock.config.initFocusSecs
 import kotlinx.coroutines.delay
@@ -27,6 +31,10 @@ fun StateControl(
 ) {
     // Coroutine scope
     val coroutineScope = rememberCoroutineScope()
+
+    val context = LocalContext.current
+    val player = remember { MediaPlayer.create(context, R.raw.song_of_hope) }
+
     // Launch a coroutine to update the remaining time
     LaunchedEffect(key1 = true) {
         coroutineScope.launch {
@@ -43,6 +51,7 @@ fun StateControl(
                         } else if (remainingSecs.value == 0) {
                             state.value = PomodoroState.FOCUSED
                             remainingSecs.value = initBreakSecs
+                            player.start()
                         }
                     }
                     PomodoroState.FOCUSED -> {
@@ -53,6 +62,7 @@ fun StateControl(
                             remainingSecs.value--
                         } else if (remainingSecs.value == 0) {
                             state.value = PomodoroState.BROKE
+                            player.start()
                         }
                     }
                     PomodoroState.BROKE -> {
@@ -60,6 +70,7 @@ fun StateControl(
                     }
                 }
             }
+            player.release()
         }
     }
 }
