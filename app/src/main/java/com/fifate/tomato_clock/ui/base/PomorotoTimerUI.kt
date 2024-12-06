@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
@@ -117,33 +118,21 @@ fun PomodoroTimerUI(
     smallGoal: MutableState<String>
 ) {
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()){
-//        Image(
-//            painter = painterResource(id = R.drawable.bamboo),
-//            contentDescription = stringResource(id = R.string.bamboo)
-//        )
         Box(modifier = Modifier
             .weight(1f)
             .align(Alignment.Start)){
             Image(painterResource(R.drawable.bamboo), contentDescription = "bamboo")
         }
 
-        Timer(remainingSecs, 260, SunOrange,state)
-
         Goal(state, smallGoal)
-
+        Spacer(modifier = Modifier.weight(0.1f))
+        Timer(remainingSecs, 260, SunOrange,state)
+        Spacer(modifier = Modifier.weight(0.1f))
         PomodoroTimerButtons(state,isPause,remainingSecs)
 
         Box(modifier = Modifier.weight(1f)){
             Image(painterResource(R.drawable.orchid), contentDescription = "bamboo")
         }
-
-//        Image(
-//            painter = painterResource(id = R.drawable.orchid),
-//            contentDescription = stringResource(id = R.string.orchid)
-//        )
-
-
-
     }
 }
 
